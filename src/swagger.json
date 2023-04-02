@@ -1,0 +1,70 @@
+{
+    "paths": {
+      "/api/post": {
+        "post": {
+          "tags": [
+            "post"
+          ],
+          "summary": "Create a new post",
+          "operationId": "createPost",
+          "parameters": [],
+          "requestBody": {
+            "description": "Post object that needs to be added",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Post created"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      }
+    },
+    "component": {
+      "schemas": {
+        "Post": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Post id",
+              "example": 1
+            },
+            "title": {
+              "type": "string",
+              "description": "Post title",
+              "example": "My first post"
+            },
+            "content": {
+              "type": "string",
+              "description": "Post content",
+              "example": "Hello, World!"
+            },
+            "createAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Post creation time",
+              "example": "2022-04-01T00:00:00.000Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Post update time",
+              "example": "2022-04-01T00:00:00.000Z"
+            }
+          }
+        }
+      }
+    }
+  }
