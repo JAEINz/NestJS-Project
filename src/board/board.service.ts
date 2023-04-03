@@ -2,20 +2,43 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateBoardDto } from './board.dto';
 import { Board } from './board.entity';
+import { Prisma } from '@prisma/client'
+
 
 @Injectable()
 export class BoardService {
-    private readonly board: Board[] = [];
+  constructor(private readonly prisma: PrismaService) { }
+  private board: Board[] = [];
 
-  create(content: CreateBoardDto): Board {
-    this.board.push(content);
-    return content;
+  async create(board: Prisma.BoardCreateInput): Promise<number> {
+    const createBoard = await this.prisma.board.create({
+      data: board,
+    });
+    return createBoard.id
   }
+}
+
+
+
+
+
+
+// @Injectable()
+// export class BoardService {
+//     private readonly board: Board[] = [];
+
+//   create(board: CreateBoardDto): Board {
+//     this.board.push(board);
+//     return board;
+//   }
   
 
-  findOne(id: number): Board {
-    return this.board[id];
-  }
+//   findOne(id: number): Board {
+//     return this.board[id];
+//   }
+
+
+
   
   // constructor(private readonly prisma: PrismaService) { }
 
@@ -27,4 +50,4 @@ export class BoardService {
   //     },
   //   });
   // }
-}
+
