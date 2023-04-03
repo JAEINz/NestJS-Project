@@ -1,7 +1,6 @@
-
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreatePostDto {
+export class Board {
   @ApiProperty({ description: 'ID of the post' })
   id: number;
 

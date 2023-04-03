@@ -12,7 +12,7 @@ generator client {
 
 
 
-model Post {
+model Board {
     id     Int     @default(autoincrement()) @id // @default() 로 기본값을 지정, 모델의 id로 지정
     title  String   @db.VarChar(20)
     content String  @db.VarChar(200)//? 뒤에 ? 를 붙이면 데이터가 필수적으로 주어지지 않아도 된다.
