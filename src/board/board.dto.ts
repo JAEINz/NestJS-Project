@@ -1,12 +1,19 @@
-
 import { ApiProperty } from '@nestjs/swagger';
-
+import { IsInt, IsString } from 'class-validator'
 
 export class CreateBoardDto {
-  @ApiProperty({ description: 'Title of the post' })
+  @IsString()
+  @ApiProperty({
+    example: '제목을 입력하세요.',
+    description: 'Title of the post'
+  })
   title: string;
 
-  @ApiProperty({ description: 'Content of the post' })
+  @IsString()
+  @ApiProperty({
+    example: '내용을 입력하세요.',
+    description: 'Content of the post'
+  })
   content: string;
 
 }
