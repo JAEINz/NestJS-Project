@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { BoardPost } from './entities/board-post.entity';
+import { BoardGetDelete } from './entities/board-get,delete.entity';
 import { Prisma } from '@prisma/client';
 
 
@@ -18,15 +19,16 @@ export class BoardService {
     return createBoard.id
   }
 
-  findAll() {
-    return `This action returns all board`;
+  findAll(): Promise<BoardPost[]> {
+    return this.prisma.board.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} board`;
+
+  findOne(id: number): Promise<BoardPost> {
+    return this.prisma.board.findUnique({ where: { id: id } });
   }
 
-  update(id: number, updateCrudDto: UpdateBoardDto) {
+  update(id: number, UpdateBoardDto: UpdateBoardDto) {
     return `This action updates a #${id} board`;
   }
 

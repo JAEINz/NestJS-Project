@@ -16,4 +16,12 @@ export class CreateBoardDto {
   })
   content: string;
 
+  @IsString()
+  @ApiProperty({
+    example: 'id를 입력하세요.',
+    description: 'id of the ger'
+  })
+  id: number;
+
+
 }
