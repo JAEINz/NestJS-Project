@@ -24,12 +24,14 @@ export class BoardController {
     return this.boardService.create(body)
   }
   @Get()
+  @ApiOperation({ summary: '전체 게시글 조회 API' })
   async findAll() {
     const boards = await this.boardService.findAll();
     return boards;
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'id로 게시글 조회 API' })
   @ApiResponse({
     status: 200,
     description: 'The found record',
@@ -40,11 +42,13 @@ export class BoardController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: '게시글 수정 API' })
   update(@Param('id') id: string, @Body() updateCrudDto: UpdateBoardDto) {
     return this.boardService.update(+id, updateCrudDto);
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: '게시글 삭제ㅋ API' })
   remove(@Param('id') id: string) {
     return this.boardService.remove(+id);
   }
