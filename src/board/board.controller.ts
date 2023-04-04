@@ -32,13 +32,9 @@ export class BoardController {
 
   @Get(':id')
   @ApiOperation({ summary: 'id로 게시글 조회 API' })
-  @ApiResponse({
-    status: 200,
-    description: 'The found record',
-    type: BoardPost,
-  })
-  findOne(@Param('id') id: string): BoardPost {
-    return this.boardService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const board = await this.boardService.findOne(+id);
+    return board;
   }
 
   @Patch(':id')
@@ -48,7 +44,7 @@ export class BoardController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: '게시글 삭제ㅋ API' })
+  @ApiOperation({ summary: '게시글 삭제 API' })
   remove(@Param('id') id: string) {
     return this.boardService.remove(+id);
   }

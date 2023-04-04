@@ -19,17 +19,13 @@ export class BoardService {
     return createBoard.id
   }
 
-  // async findAll() {
-  //   const boards = await this.prisma.board.findMany()
-  //   return boards;
-  // }
-
   findAll(): Promise<BoardPost[]> {
     return this.prisma.board.findMany();
   }
 
-  findOne(id: number): BoardPost {
-    return this.board[id];
+
+  findOne(id: number): Promise<BoardPost> {
+    return this.prisma.board.findUnique({ where: { id: id } });
   }
 
   update(id: number, UpdateBoardDto: UpdateBoardDto) {
