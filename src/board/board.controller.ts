@@ -8,13 +8,15 @@ import {
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
+import { BoardGetDelete } from './entities/board-get,delete.entity';
 import { BoardPost } from './entities/board-post.entity';
+import { Board } from '@prisma/client';
 
 
 @ApiTags('Board API')
 @Controller('board')
 export class BoardController {
-  constructor(private readonly boardService: BoardService) { }
+  constructor(private readonly boardService: BoardService) {}
 
   @Post()
   @ApiOperation({ summary: '게시글 생성 API' })
@@ -22,12 +24,18 @@ export class BoardController {
     return this.boardService.create(body)
   }
   @Get()
-  findAll() {
-    return this.boardService.findAll();
+  async findAll() {
+    const boards = await this.boardService.findAll();
+    return boards;
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  @ApiResponse({
+    status: 200,
+    description: 'The found record',
+    type: BoardPost,
+  })
+  findOne(@Param('id') id: string): BoardPost {
     return this.boardService.findOne(+id);
   }
 
