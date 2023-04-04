@@ -1,5 +1,5 @@
 
-export class Board {
+export class BoardPost {
 
   title: string;
   content: string;

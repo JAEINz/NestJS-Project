@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateBoardDto } from './board.dto';
-import { Board } from './board.entity';
-import { Prisma } from '@prisma/client'
+import { UpdateBoardDto } from './dto/update-board.dto';
+import { BoardPost } from './entities/board-post.entity';
+import { Prisma } from '@prisma/client';
 
 
 @Injectable()
 export class BoardService {
   constructor(private readonly prisma: PrismaService) { }
-  private board: Board[] = [];
+  private board: BoardPost[] = [];
 
   async create(board: Prisma.BoardCreateInput): Promise<number> {
     const createBoard = await this.prisma.board.create({
@@ -16,38 +16,32 @@ export class BoardService {
     });
     return createBoard.id
   }
+
+  findAll(): Promise<BoardPost[]> {
+    return this.prisma.board.findMany();
+  }
+
+
+  findOne(id: number): Promise<BoardPost> {
+    return this.prisma.board.findUnique({
+      where: { id: id }
+    });
+  }
+
+  update(id: number, body: UpdateBoardDto): Promise<BoardPost>{  
+    const { title, content } = body;
+    return this.prisma.board.update({
+      where: { id: id },
+      data: { title, content }
+    })
+  }
+
+  delete(id: number) {
+    return this.prisma.board.delete({
+      where: { id: id }
+    });;
+  }
 }
 
 
-
-
-
-
-// @Injectable()
-// export class BoardService {
-//     private readonly board: Board[] = [];
-
-//   create(board: CreateBoardDto): Board {
-//     this.board.push(board);
-//     return board;
-//   }
-  
-
-//   findOne(id: number): Board {
-//     return this.board[id];
-//   }
-
-
-
-  
-  // constructor(private readonly prisma: PrismaService) { }
-
-  // async create(createBoardDto: CreateBoardDto) {
-  //   return this.prisma.post.create({
-  //     data: {
-  //       title: createBoardDto.title,
-  //       content: createBoardDto.content,
-  //     },
-  //   });
-  // }
 
