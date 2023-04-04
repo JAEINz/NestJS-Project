@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { BoardPost } from './entities/board-post.entity';
-import { BoardGetDelete } from './entities/board-get,delete.entity';
 import { Prisma } from '@prisma/client';
 
 
@@ -25,15 +23,23 @@ export class BoardService {
 
 
   findOne(id: number): Promise<BoardPost> {
-    return this.prisma.board.findUnique({ where: { id: id } });
+    return this.prisma.board.findUnique({
+      where: { id: id }
+    });
   }
 
-  update(id: number, UpdateBoardDto: UpdateBoardDto) {
-    return `This action updates a #${id} board`;
+  update(id: number, body: UpdateBoardDto): Promise<BoardPost>{  
+    const { title, content } = body;
+    return this.prisma.board.update({
+      where: { id: id },
+      data: { title, content }
+    })
   }
 
   delete(id: number) {
-    return this.prisma.board.delete({ where: { id: id } });;
+    return this.prisma.board.delete({
+      where: { id: id }
+    });;
   }
 }
 
