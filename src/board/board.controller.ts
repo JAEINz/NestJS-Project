@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -6,12 +6,13 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { BoardService } from './board.service';
-import { CreateBoardDto } from './board.dto';
-import { Board } from './board.entity';
+import { CreateBoardDto } from './dto/create-board.dto';
+import { UpdateBoardDto } from './dto/update-board.dto';
+import { BoardPost } from './entities/board-post.entity';
 
 
 @ApiTags('Board API')
-@Controller('post')
+@Controller('board')
 export class BoardController {
   constructor(private readonly boardService: BoardService) { }
 
@@ -20,28 +21,24 @@ export class BoardController {
   create(@Body() body: CreateBoardDto): Promise<number> {
     return this.boardService.create(body)
   }
+  @Get()
+  findAll() {
+    return this.boardService.findAll();
+  }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.boardService.findOne(+id);
+  }
 
-  // @ApiBody({ type: CreatePostDto })
-  // @ApiCreatedResponse({ description: '성공' })
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateCrudDto: UpdateBoardDto) {
+    return this.boardService.update(+id, updateCrudDto);
+  }
 
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.boardService.remove(+id);
+  }
 
-  // @Post()
-  // @ApiOperation({ summary: '게시글 생성 API' })
-  // @ApiResponse({ status: 403, description: 'Forbidden.' })
-  // async create(@Body() body: CreateBoardDto): Promise<Board> {
-  //   console.log(body);
-  //   return this.boardService.create(body);
-  // }
-
-  // @Get(':id')
-  // @ApiResponse({
-  //   status: 200,
-  //   description: 'The found record',
-  //   type: Board,
-  // })
-  // findOne(@Param('id') id: string): Board {
-  //   return this.boardService.findOne(+id);
-  // }
 }
-
