@@ -45,8 +45,8 @@ export class BoardController {
 
   @Delete(':id')
   @ApiOperation({ summary: '게시글 삭제 API' })
-  remove(@Param('id') id: string) {
-    return this.boardService.remove(+id);
+  delete(@Param('id') id: string) {
+    return this.boardService.delete(+id);
   }
 
 }
